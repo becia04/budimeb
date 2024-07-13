@@ -1,0 +1,18 @@
+﻿<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="navbar_normal">
+<nav class="menu navbar" style="position:relative;">
+        <div style="width:60%; display:inline-block;">
+            <a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a>
+        @foreach (var category in (IEnumerable<budimeb.Models.Category>)ViewData["Categories"])
+        {
+            <a class="menu-link" href="@Url.Action("GalleryCategory", "Home", new { categoryName = category.Name })">@category.Name</a>
+        }
+        </div>
+        <div style="vertical-align: top; width: 40%; display: inline-block; text-align:right;">
+            <a href="@Url.Action("Index", "Home")">🇩🇪</a>
+        </div>
+        
+</nav>
+</div>

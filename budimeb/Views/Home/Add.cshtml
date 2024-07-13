@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Dodaj";
+}
+
+<head>
+    <title>Dodaj zdjęcia</title>
+    <style>
+        .preview-img {
+            max-width: 150px;
+            max-height: 150px;
+            margin: 10px;
+        }
+    </style>
+    <!-- Dodanie jQuery za pomocą CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Dodaj nowe zdjęcia</h2>
+    <form asp-action="Add" method="post" enctype="multipart/form-data">
+        <div class="text-danger">
+            @if (ViewData["Error"] != null)
+            {
+                <p>@ViewData["Error"]</p>
+            }
+        </div>
+        <div class="form-group">
+            <label for="photos">Zdjęcia</label>
+            <input type="file" id="photos" name="photos" multiple class="form-control" accept=".jpg,.jpeg" />
+            @if (ViewData["PhotosError"] != null)
+            {
+                <p class="text-danger">@ViewData["PhotosError"]</p>
+            }
+        </div>
+        <div id="photos-preview" class="form-group">
+            <!-- Podgląd zdjęć będzie dodawany tutaj -->
+        </div>
+        <div class="form-group">
+            <label for="category">Kategoria:</label><br>
+            <select id="category" name="categoryId" class="form-control">
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select><br>
+            @if (ViewData["CategoryError"] != null)
+            {
+                <p class="text-danger">@ViewData["CategoryError"]</p>
+            }
+        </div>
+        <div class="form-group">
+            <label for="name">Nazwa:</label><br>
+            <input type="text" id="name" name="name" class="form-control"><br>
+        </div>
+        <div class="form-group">
+            <label for="desc">Opis:</label><br>
+            <input type="text" id="desc" name="desc" class="form-control"><br>
+        </div>
+        <input type="submit" value="Dodaj" class="btn btn-primary" />
+    </form>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('#photos').on('change', function () {
+                    var preview = $('#photos-preview');
+                    var files = this.files;
+
+                    // Clear any existing previews
+                    preview.empty();
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+
+                        // Only process image files
+                        if (file.type.match('image.*')) {
+                            var reader = new FileReader();
+
+                            reader.onload = (function (theFile) {
+                                return function (e) {
+                                    var img = $('<img>').addClass('preview-img').attr('src', e.target.result);
+                                    preview.append(img);
+                                };
+                            })(file);
+
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+            });
+        </script>
+    }
+</body>
