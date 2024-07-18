@@ -1,0 +1,131 @@
+﻿@model Project
+
+@{
+    ViewBag.Title = "Edytuj";
+}
+
+<head>
+    <title>Edytuj</title>
+    <style>
+        .preview-img {
+            max-width: 150px;
+            max-height: 150px;
+            margin: 10px;
+            position: relative;
+        }
+
+        .remove-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: red;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+        }
+    </style>
+    <!-- Dodanie jQuery za pomocą CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Edytuj</h2>
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProjectId" />
+        <div class="text-danger">
+            @if (ViewData["Error"] != null)
+            {
+                <p>@ViewData["Error"]</p>
+            }
+        </div>
+        <div class="form-group">
+            <label for="photos">Zdjęcia</label>
+            <input type="file" id="photos" name="photos" multiple class="form-control" accept=".jpg,.jpeg" />
+            @if (ViewData["PhotosError"] != null)
+            {
+                <p class="text-danger">@ViewData["PhotosError"]</p>
+            }
+        </div>
+        <div id="photos-preview" class="form-group">
+            <!-- Podgląd zdjęć będzie dodawany tutaj -->
+            @foreach (var photo in Model.Photos)
+            {
+                <div class="img-container" style="position: relative; display: inline-block;">
+                    <img src="@photo.PhotoPath" class="preview-img" />
+                    <button type="button" class="remove-img" data-photo-id="@photo.PhotoId">X</button>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label for="category">Kategoria:</label><br>
+            <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name", Model.CategoryId))" class="form-control">
+            </select><br>
+            @if (ViewData["CategoryError"] != null)
+            {
+                <p class="text-danger">@ViewData["CategoryError"]</p>
+            }
+        </div>
+        <div class="form-group">
+            <label for="name">Nazwa:</label><br>
+            <input type="text" id="name" asp-for="Name" class="form-control"><br>
+        </div>
+        <div class="form-group">
+            <label for="desc">Opis:</label><br>
+            <input type="text" id="desc" asp-for="Description" class="form-control"><br>
+        </div>
+        <input type="hidden" id="photos-to-remove" name="PhotosToRemove" />
+        <input type="submit" value="Zapisz" class="btn btn-primary" />
+        <button type="button" id="deleteProjectBtn" class="btn btn-danger">Usuń</button>
+    </form>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                var photosToRemove = [];
+
+                $('.remove-img').on('click', function () {
+                    var photoId = $(this).data('photo-id');
+                    photosToRemove.push(photoId);
+                    $(this).closest('.img-container').remove();
+                    $('#photos-to-remove').val(photosToRemove.join(','));
+                });
+
+                $('#photos').on('change', function () {
+                    var preview = $('#photos-preview');
+                    var files = this.files;
+
+                    // Clear any existing previews (new uploads only)
+                    preview.find('.new-upload').remove();
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+
+                        // Only process image files
+                        if (file.type.match('image.*')) {
+                            var reader = new FileReader();
+
+                            reader.onload = (function (theFile) {
+                                return function (e) {
+                                    var img = $('<img>').addClass('preview-img new-upload').attr('src', e.target.result);
+                                    preview.append(img);
+                                };
+                            })(file);
+
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#deleteProjectBtn').on('click', function () {
+                    if (confirm('Czy na pewno chcesz usunąć projekt wraz ze zdjęciami?')) {
+                        // Przekierowanie do akcji usuwania
+                        window.location.href = '@Url.Action("DeleteProject", "Home", new { id = Model.ProjectId })';
+                    }
+                });
+            });
+        </script>
+    }
+</body>

@@ -1,5 +1,5 @@
 ﻿<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <div class="navbar_normal">
 <nav class="menu navbar" style="position:relative;">
@@ -7,11 +7,16 @@
             <a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a>
         @foreach (var category in (IEnumerable<budimeb.Models.Category>)ViewData["Categories"])
         {
-            <a class="menu-link" href="@Url.Action("GalleryCategory", "Home", new { categoryName = category.Name })">@category.Name</a>
+                <a class="menu-link" href="@Url.Action("ProjectsByCategory", "Home", new { categoryId = category.Id })">@category.Name</a>
         }
         </div>
         <div style="vertical-align: top; width: 40%; display: inline-block; text-align:right;">
-            <a href="@Url.Action("Index", "Home")">🇩🇪</a>
+            <a class="nav-link" href="https://www.facebook.com/Budimeb" target="_blank">
+                <i class="fab fa-facebook"></i> <!-- Ikona Facebooka -->
+            </a>
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">
+                <i class="fas fa-phone"></i>
+            </a>
         </div>
         
 </nav>
