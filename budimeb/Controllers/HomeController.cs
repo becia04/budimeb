@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace budimeb.Controllers
 {
@@ -143,12 +144,33 @@ namespace budimeb.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            bool verify = true;
+
+            if (photos == null || photos.Count == 0)
             {
-                try
-                {
-                    // Load the original project with related category and photos
-                    var originalProject = await db.Projects.Include(p => p.Category).Include(p => p.Photos).FirstOrDefaultAsync(p => p.ProjectId == id);
+                ViewData["PhotosError"] = "Wybierz zdjęcia";
+                verify = false;
+            }
+            if (photos.Count > 7)
+            {
+                ViewData["PhotosError"] = "Za dużo plików (max 7)";
+                verify = false;
+            }
+
+            var category = await db.Categories.FindAsync(project.CategoryId);
+            if (category == null)
+            {
+                ViewData["CategoryError"] = "Wybierz kategorię";
+                verify = false;
+            }
+
+            if (!verify)
+            {
+                ViewBag.Categories = db.Categories.OrderBy(a => a.Name).ToList();
+                return View();
+            }
+            // Load the original project with related category and photos
+            var originalProject = await db.Projects.Include(p => p.Category).Include(p => p.Photos).FirstOrDefaultAsync(p => p.ProjectId == id);
                     if (originalProject == null)
                     {
                         return NotFound();
@@ -239,20 +261,7 @@ namespace budimeb.Controllers
                     }
 
                     await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!db.Projects.Any(e => e.ProjectId == id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+
             ViewBag.Categories = await db.Categories.OrderBy(c => c.Name).ToListAsync();
             return View(project);
         }
@@ -326,18 +335,94 @@ namespace budimeb.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Categories = db.Categories.OrderBy(a => a.Name).ToList();
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult EditCategory(int id)
         {
-            return View();
+            var category = db.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCategory(int id, Category category, IFormFile photo, bool deletePhoto)
+        {
+            if (id != category.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingCategory = await db.Categories.FindAsync(id);
+            if (existingCategory == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (deletePhoto && !string.IsNullOrEmpty(existingCategory.PhotoPath))
+                {
+                    // Delete existing photo from server
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.PhotoPath.TrimStart('/'));
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                    existingCategory.PhotoPath = null;
+                }
+
+                if (photo != null && (Path.GetExtension(photo.FileName).ToLower() == ".jpg" || Path.GetExtension(photo.FileName).ToLower() == ".jpeg"))
+                {
+                    // Delete existing photo from server if necessary
+                    if (!deletePhoto && !string.IsNullOrEmpty(existingCategory.PhotoPath))
+                    {
+                        var existingFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.PhotoPath.TrimStart('/'));
+                        if (System.IO.File.Exists(existingFilePath))
+                        {
+                            System.IO.File.Delete(existingFilePath);
+                        }
+                    }
+
+                    // Normalize category name
+                    var normalizedCategoryName = NormalizeFileName(category.Name);
+
+                    var fileName = $"{normalizedCategoryName}{Path.GetExtension(photo.FileName)}";
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await photo.CopyToAsync(stream);
+                    }
+
+                    category.PhotoPath = "/uploads/" + fileName;
+                }
+                else if (!deletePhoto && !string.IsNullOrEmpty(existingCategory.PhotoPath))
+                {
+                    // If no new photo is uploaded and deletePhoto is false, keep existing photo
+                    category.PhotoPath = existingCategory.PhotoPath;
+                }
+
+                db.Entry(existingCategory).CurrentValues.SetValues(category);
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(category);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+       
     }
 }
