@@ -93,9 +93,10 @@ namespace budimeb.Controllers
                     var fileName = $"{normalizedCategoryName}_{project.ProjectId}_{photoId}{Path.GetExtension(photo.FileName)}";
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (var inputStream = photo.OpenReadStream())
+                    using (var outputStream = new FileStream(filePath, FileMode.Create))
                     {
-                        await photo.CopyToAsync(stream);
+                        ImageResizer.ResizeImage(inputStream, outputStream, 800, 800, 80); // Adjust dimensions and quality as needed
                     }
 
                     newPhoto.PhotoPath = "/uploads/" + fileName;
@@ -262,11 +263,11 @@ namespace budimeb.Controllers
                         var fileName = $"{normalizedCategoryName}_{project.ProjectId}_{photoId}{Path.GetExtension(photo.FileName)}";
                         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
 
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        using (var inputStream = photo.OpenReadStream())
+                        using (var outputStream = new FileStream(filePath, FileMode.Create))
                         {
-                            await photo.CopyToAsync(stream);
+                            ImageResizer.ResizeImage(inputStream, outputStream, 800, 800, 80); // Adjust dimensions and quality as needed
                         }
-
                         newPhoto.PhotoPath = "/uploads/" + fileName;
                         db.Photos.Update(newPhoto);
                         await db.SaveChangesAsync();
