@@ -32,7 +32,7 @@
             @foreach (var cat in ViewBag.Categories)
             {
                 <div class="card">
-                    <a href="@Url.Action("ProjectsByCategory", "Home", new { categoryId = cat.Id })" class="card__link">
+                    <a href="@Url.Action("Category", "Home", new { categoryId = cat.Id })" class="card__link">
                         <img src="@cat.PhotoPath" alt="@cat.Name">
                     </a>
                     <div class="card__description">@cat.Description</div>

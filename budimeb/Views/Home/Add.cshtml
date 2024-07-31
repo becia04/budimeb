@@ -5,58 +5,71 @@
 <head>
     <title>Dodaj zdjęcia</title>
     <style>
+        .img-container {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+        }
         .preview-img {
             max-width: 150px;
             max-height: 150px;
-            margin: 10px;
+            display: block;
+            margin: 0 auto;
         }
-    </style>
+        .description-input {
+            width: 100%;
+            box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+            margin-top: 5px;
+        }
+        </style>
     <!-- Dodanie jQuery za pomocą CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h2>Dodaj nowe zdjęcia</h2>
-    <form asp-action="Add" method="post" enctype="multipart/form-data">
-        <div class="text-danger">
-            @if (ViewData["Error"] != null)
-            {
-                <p>@ViewData["Error"]</p>
-            }
-        </div>
-        <div class="form-group">
-            <label for="photos">Zdjęcia</label>
-            <input type="file" id="photos" name="photos" multiple class="form-control" accept=".jpg,.jpeg" />
-            @if (ViewData["PhotosError"] != null)
-            {
-                <p class="text-danger">@ViewData["PhotosError"]</p>
-            }
-        </div>
-        <div id="photos-preview" class="form-group">
-        </div>
-        <div class="form-group">
-            <label for="category">Kategoria:</label><br>
-            <select id="category" name="categoryId" class="form-control">
-                @foreach (var category in ViewBag.Categories)
+    <div style="margin-left:3rem; width:60%; font-size:16px;">
+        <h2 style="font-family: 'Josefin Sans', sans-serif;">Dodaj nowe zdjęcia</h2>
+        <form asp-action="Add" method="post" enctype="multipart/form-data">
+            <div class="text-danger">
+                @if (ViewData["Error"] != null)
                 {
-                    <option value="@category.Id">@category.Name</option>
+                    <p>@ViewData["Error"]</p>
                 }
-            </select><br>
-            @if (ViewData["CategoryError"] != null)
-            {
-                <p class="text-danger">@ViewData["CategoryError"]</p>
-            }
-        </div>
-        <div class="form-group">
-            <label for="name">Nazwa:</label><br>
-            <input type="text" id="name" name="name" class="form-control"><br>
-        </div>
-        <div class="form-group">
-            <label for="desc">Opis:</label><br>
-            <input type="text" id="desc" name="desc" class="form-control"><br>
-        </div>
-        <input type="submit" value="Dodaj" class="btn btn-primary" />
-    </form>
+            </div>
+            <div class="form-group">
+                <label for="photos">Zdjęcia</label>
+                <input type="file" id="photos" name="photos" multiple class="form-control" accept=".jpg,.jpeg" />
+                @if (ViewData["PhotosError"] != null)
+                {
+                    <p class="text-danger">@ViewData["PhotosError"]</p>
+                }
+            </div>
+            <div id="photos-preview" class="form-group">
+            </div>
+            <div class="form-group">
+                <label for="category">Kategoria:</label><br>
+                <select id="category" name="categoryId" class="form-control">
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select><br>
+                @if (ViewData["CategoryError"] != null)
+                {
+                    <p class="text-danger">@ViewData["CategoryError"]</p>
+                }
+            </div>
+            <div class="form-group">
+                <label for="name">Nazwa:</label><br>
+                <input type="text" id="name" name="name" class="form-control"><br>
+            </div>
+            <div class="form-group">
+                <label for="desc">Opis:</label><br>
+                <input type="text" id="desc" name="desc" class="form-control"><br>
+            </div>
+            <input type="submit" value="Dodaj" class="btn btn-primary" />
+        </form>
 
+    </div>
+    
     @section Scripts {
         <script>
             $(document).ready(function () {
@@ -67,6 +80,9 @@
                     // Clear any existing previews
                     preview.empty();
 
+                    // Clear any existing description fields
+                    preview.append('<div id="descriptions"></div>');
+
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
 
@@ -74,12 +90,20 @@
                         if (file.type.match('image.*')) {
                             var reader = new FileReader();
 
-                            reader.onload = (function (theFile) {
+                            reader.onload = (function (theFile, index) {
                                 return function (e) {
+                                    var imgContainer = $('<div>').addClass('img-container');
                                     var img = $('<img>').addClass('preview-img').attr('src', e.target.result);
-                                    preview.append(img);
+                                    var input = $('<textarea>').attr({
+                                        name: 'descriptions[' + index + ']', // Dynamic name for descriptions
+                                        placeholder: 'Opis zdjęcia...',
+                                        rows: 2 // Minimum number of rows for the textarea
+                                    }).addClass('description-input');
+
+                                    imgContainer.append(img).append(input);
+                                    $('#descriptions').append(imgContainer);
                                 };
-                            })(file);
+                            })(file, i);
 
                             reader.readAsDataURL(file);
                         }

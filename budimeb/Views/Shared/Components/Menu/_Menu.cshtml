@@ -13,7 +13,7 @@
         <div>
             @foreach (var category in (IEnumerable<budimeb.Models.Category>)ViewData["Categories"])
             {
-            <a class="btn"  style="font-size:25px; color:white;" href="@Url.Action("ProjectsByCategory", "Home", new { categoryId = category.Id })">
+            <a class="btn"  style="font-size:25px; color:white;" href="@Url.Action("Category", "Home", new { categoryId = category.Id })">
                 <i class="fa-light fa-plate-utensils"></i> @category.Name
             </a>
             }

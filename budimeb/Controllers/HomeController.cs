@@ -31,7 +31,7 @@ namespace budimeb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(int categoryId, string name, string desc, List<IFormFile> photos)
+        public async Task<IActionResult> Add(int categoryId, string name, string desc, List<IFormFile> photos, List<string> descriptions)
         {
             bool verify = true;
 
@@ -72,13 +72,16 @@ namespace budimeb.Controllers
 
             var projectId = project.ProjectId;
 
-            foreach (var photo in photos)
+            for (var i = 0; i < photos.Count; i++)
             {
+                var photo = photos[i];
+                var description = descriptions != null && descriptions.Count > i ? descriptions[i] : string.Empty;
                 if (photo.Length > 0 && (Path.GetExtension(photo.FileName).ToLower() == ".jpg" || Path.GetExtension(photo.FileName).ToLower() == ".jpeg"))
                 {
                     var newPhoto = new Photo
                     {
                         ProjectId = project.ProjectId,
+                        Description = description,
                         UploadedDate = DateTime.Now
                     };
 
@@ -104,7 +107,7 @@ namespace budimeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> ProjectsByCategory(int categoryId)
+        public async Task<IActionResult> Category(int categoryId)
         {
             var category = await db.Categories.FindAsync(categoryId);
             if (category == null)
