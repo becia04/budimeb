@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\background-hero.jpg">
+    <Content Update="wwwroot\home\background-hero.jpg">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
