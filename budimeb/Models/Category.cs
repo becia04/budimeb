@@ -8,6 +8,7 @@ namespace budimeb.Models
         public string Name { get; set; }
         public string Description {  get; set; }
         public string PhotoPath { get; set; }
+        public string IconClass { get; set; }
 
         public ICollection<Project> Projects { get; set; }
     }

@@ -2,7 +2,6 @@
 using budimeb.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,7 +10,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace budimeb.Controllers
 {
@@ -330,6 +328,8 @@ namespace budimeb.Controllers
 
         public IActionResult About()
         {
+            ViewBag.YearsOfExperience = DateTime.Now.Year - 2003;
+
             return View();
         }
 
