@@ -126,7 +126,9 @@ namespace budimeb.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var project = await db.Projects.Include(p => p.Photos).FirstOrDefaultAsync(p => p.ProjectId == id);
+            var project = await db.Projects
+                                  .Include(p => p.Photos)
+                                  .FirstOrDefaultAsync(p => p.ProjectId == id);
             if (project == null)
             {
                 return NotFound();
@@ -138,7 +140,7 @@ namespace budimeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Project project, List<IFormFile> photos, string photosToRemove)
+        public async Task<IActionResult> Edit(int id, Project project, List<IFormFile> photos, string photosToRemove, Dictionary<int, string> PhotoDescriptions)
         {
             if (id != project.ProjectId)
             {
@@ -147,15 +149,19 @@ namespace budimeb.Controllers
 
             bool verify = true;
 
-            if (photos == null || photos.Count == 0)
+            // Sprawdź, czy wybrano zdjęcia, jeśli są dodawane nowe zdjęcia
+            if (photos != null && photos.Count > 0)
             {
-                ViewData["PhotosError"] = "Wybierz zdjęcia";
-                verify = false;
+                if (photos.Count > 7)
+                {
+                    ViewData["PhotosError"] = "Za dużo plików (max 7)";
+                    verify = false;
+                }
             }
-            if (photos.Count > 7)
+            else if (photos == null)
             {
-                ViewData["PhotosError"] = "Za dużo plików (max 7)";
-                verify = false;
+                // Jeśli nie wybrano nowych zdjęć, nie pokazuj błędu
+                ViewData["PhotosError"] = null;
             }
 
             var category = await db.Categories.FindAsync(project.CategoryId);
@@ -168,104 +174,122 @@ namespace budimeb.Controllers
             if (!verify)
             {
                 ViewBag.Categories = db.Categories.OrderBy(a => a.Name).ToList();
-                return View();
+                return View(project);
             }
+
             // Load the original project with related category and photos
-            var originalProject = await db.Projects.Include(p => p.Category).Include(p => p.Photos).FirstOrDefaultAsync(p => p.ProjectId == id);
-                    if (originalProject == null)
+            var originalProject = await db.Projects
+                                          .Include(p => p.Category)
+                                          .Include(p => p.Photos)
+                                          .FirstOrDefaultAsync(p => p.ProjectId == id);
+            if (originalProject == null)
+            {
+                return NotFound();
+            }
+
+            // Update the project details
+            originalProject.Name = project.Name;
+            originalProject.Description = project.Description;
+            originalProject.CategoryId = project.CategoryId;
+
+            // Check if the category has changed
+            var newCategory = await db.Categories.FindAsync(project.CategoryId);
+            if (newCategory == null)
+            {
+                return NotFound("New category not found");
+            }
+
+            var normalizedCategoryName = NormalizeFileName(newCategory.Name);
+            if (originalProject.CategoryId != project.CategoryId)
+            {
+                // Update existing photo file names
+                foreach (var photo in originalProject.Photos)
+                {
+                    var oldFileName = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + photo.PhotoPath);
+                    var newFileName = $"{normalizedCategoryName}_{photo.ProjectId}_{photo.PhotoId}{Path.GetExtension(oldFileName)}";
+                    var newFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", newFileName);
+
+                    if (System.IO.File.Exists(oldFileName))
                     {
-                        return NotFound();
+                        System.IO.File.Move(oldFileName, newFilePath);
                     }
 
-                    // Update the project details
-                    originalProject.Name = project.Name;
-                    originalProject.Description = project.Description;
-                    originalProject.CategoryId = project.CategoryId;
+                    photo.PhotoPath = "/uploads/" + newFileName;
+                    db.Photos.Update(photo);
+                }
 
-                    var newCategory = await db.Categories.FindAsync(project.CategoryId);
-                    if (newCategory == null)
+                await db.SaveChangesAsync();
+            }
+
+            // Usuwanie zdjęć
+            if (!string.IsNullOrEmpty(photosToRemove))
+            {
+                var photoIdsToRemove = photosToRemove.Split(',').Select(int.Parse).ToList();
+                var photosToDelete = db.Photos.Where(p => photoIdsToRemove.Contains(p.PhotoId)).ToList();
+
+                foreach (var photo in photosToDelete)
+                {
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + photo.PhotoPath);
+                    if (System.IO.File.Exists(filePath))
                     {
-                        return NotFound("New category not found");
+                        System.IO.File.Delete(filePath);
                     }
 
-                    var normalizedCategoryName = NormalizeFileName(newCategory.Name);
+                    db.Photos.Remove(photo);
+                }
 
-                    // Check if the category has changed
-                    if (originalProject.CategoryId != project.CategoryId)
+                await db.SaveChangesAsync();
+            }
+
+            // Dodawanie nowych zdjęć
+            if (photos != null)
+            {
+                foreach (var photo in photos)
+                {
+                    if (photo.Length > 0 && (Path.GetExtension(photo.FileName).ToLower() == ".jpg" || Path.GetExtension(photo.FileName).ToLower() == ".jpeg"))
                     {
-                        // Update existing photo file names
-                        foreach (var photo in originalProject.Photos)
+                        var newPhoto = new Photo
                         {
-                            var oldFileName = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + photo.PhotoPath);
-                            var newFileName = $"{normalizedCategoryName}_{photo.ProjectId}_{photo.PhotoId}{Path.GetExtension(oldFileName)}";
-                            var newFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", newFileName);
+                            ProjectId = project.ProjectId,
+                            UploadedDate = DateTime.Now,
+                            Description = PhotoDescriptions.ContainsKey(0) ? PhotoDescriptions[0] : string.Empty // Default description for new photos
+                        };
 
-                            if (System.IO.File.Exists(oldFileName))
-                            {
-                                System.IO.File.Move(oldFileName, newFilePath);
-                            }
+                        db.Photos.Add(newPhoto);
+                        await db.SaveChangesAsync();
 
-                            photo.PhotoPath = "/uploads/" + newFileName;
-                            db.Photos.Update(photo);
+                        var photoId = newPhoto.PhotoId;
+                        var fileName = $"{normalizedCategoryName}_{project.ProjectId}_{photoId}{Path.GetExtension(photo.FileName)}";
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await photo.CopyToAsync(stream);
                         }
 
+                        newPhoto.PhotoPath = "/uploads/" + fileName;
+                        db.Photos.Update(newPhoto);
                         await db.SaveChangesAsync();
                     }
+                }
+            }
 
-                    // Usuwanie zdjęć
-                    if (!string.IsNullOrEmpty(photosToRemove))
-                    {
-                        var photoIdsToRemove = photosToRemove.Split(',').Select(int.Parse).ToList();
-                        var photosToDelete = db.Photos.Where(p => photoIdsToRemove.Contains(p.PhotoId)).ToList();
+            // Aktualizacja opisów istniejących zdjęć
+            foreach (var photoDesc in PhotoDescriptions)
+            {
+                var photo = originalProject.Photos.FirstOrDefault(p => p.PhotoId == photoDesc.Key);
+                if (photo != null)
+                {
+                    photo.Description = photoDesc.Value;
+                    db.Photos.Update(photo);
+                }
+            }
 
-                        foreach (var photo in photosToDelete)
-                        {
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + photo.PhotoPath);
-                            if (System.IO.File.Exists(filePath))
-                            {
-                                System.IO.File.Delete(filePath);
-                            }
-
-                            db.Photos.Remove(photo);
-                        }
-
-                        await db.SaveChangesAsync();
-                    }
-
-                    // Dodawanie nowych zdjęć
-                    foreach (var photo in photos)
-                    {
-                        if (photo.Length > 0 && (Path.GetExtension(photo.FileName).ToLower() == ".jpg" || Path.GetExtension(photo.FileName).ToLower() == ".jpeg"))
-                        {
-                            var newPhoto = new Photo
-                            {
-                                ProjectId = project.ProjectId,
-                                UploadedDate = DateTime.Now
-                            };
-
-                            db.Photos.Add(newPhoto);
-                            await db.SaveChangesAsync();
-
-                            var photoId = newPhoto.PhotoId;
-                            var fileName = $"{normalizedCategoryName}_{project.ProjectId}_{photoId}{Path.GetExtension(photo.FileName)}";
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
-
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await photo.CopyToAsync(stream);
-                            }
-
-                            newPhoto.PhotoPath = "/uploads/" + fileName;
-                            db.Photos.Update(newPhoto);
-                            await db.SaveChangesAsync();
-                        }
-                    }
-
-                    await db.SaveChangesAsync();
-
-            ViewBag.Categories = await db.Categories.OrderBy(c => c.Name).ToListAsync();
-            return View(project);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
         }
+
+
         private string NormalizeFileName(string fileName)
         {
             var normalizedString = fileName

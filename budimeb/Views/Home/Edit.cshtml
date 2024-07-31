@@ -7,6 +7,12 @@
 <head>
     <title>Edytuj</title>
     <style>
+        .img-container {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+        }
+
         .preview-img {
             max-width: 150px;
             max-height: 150px;
@@ -23,6 +29,12 @@
             cursor: pointer;
             border: none;
             border-radius: 50%;
+        }
+
+        .description-input {
+            width: 100%;
+            box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+            margin-top: 5px;
         }
     </style>
     <!-- Dodanie jQuery za pomocą CDN -->
@@ -53,6 +65,7 @@
                 <div class="img-container" style="position: relative; display: inline-block;">
                     <img src="@photo.PhotoPath" class="preview-img" />
                     <button type="button" class="remove-img" data-photo-id="@photo.PhotoId">X</button>
+                    <input type="text" name="PhotoDescriptions[@photo.PhotoId]" value="@photo.Description" class="description-input" placeholder="Opis zdjęcia" />
                 </div>
             }
         </div>
@@ -107,7 +120,9 @@
                             reader.onload = (function (theFile) {
                                 return function (e) {
                                     var img = $('<img>').addClass('preview-img new-upload').attr('src', e.target.result);
-                                    preview.append(img);
+                                    var descInput = $('<input>').attr('type', 'text').attr('name', 'PhotoDescriptions[0]').addClass('description-input').attr('placeholder', 'Opis zdjęcia');
+                                    var container = $('<div>').addClass('img-container').append(img).append(descInput);
+                                    preview.append(container);
                                 };
                             })(file);
 
