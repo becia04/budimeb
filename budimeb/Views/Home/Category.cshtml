@@ -1,4 +1,6 @@
-﻿@model IEnumerable<budimeb.Models.Project>
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model X.PagedList.IPagedList<budimeb.Models.Project>
 
 @{
     ViewBag.Title = ViewBag.CategoryName;
@@ -8,58 +10,66 @@
     <link href="~/css/category_page.css" rel="stylesheet" />
 </head>
 <div style="margin-left:3rem; margin-right:3rem; color:black; font-family: 'Josefin Sans', sans-serif;">
-    <h2 style="font-family: 'Josefin Sans', sans-serif;">@ViewBag.CategoryName</h2>
+    <div class="article-container">
+        <h2 style="font-family: 'Josefin Sans', sans-serif; font-size:38px;">@ViewBag.CategoryName</h2>
+        <div class="underline"></div>
 
-    <div class="gallery-container d-flex flex-wrap">
-        @foreach (var project in Model)
-        {
-            var carouselId = $"carousel_{project.ProjectId}";
-            var projectPhotos = project.Photos.Select(p => p.PhotoPath).ToList();
-            var jsonProjectPhotos = Newtonsoft.Json.JsonConvert.SerializeObject(projectPhotos);
-            var projectDescription = project.Description;
-            <div id="@carouselId" class="carousel slide carousel-fade mb-4 me-4" data-bs-ride="carousel" style="width: 300px; height: 300px; overflow: hidden;">
-                <!-- Indicators -->
-                <div class="carousel-indicators">
-                    @{
-                        var photoIndex = 0;
-                    }
-                    @foreach (var photo in project.Photos)
-                    {
-                        <button type="button" data-bs-target="#@carouselId" data-bs-slide-to="@photoIndex" @(photoIndex == 0 ? "class=active" : "") aria-current="true" aria-label="Slide @photoIndex"></button>
-                        photoIndex++;
-                    }
-                </div>
+        <div class="gallery-container d-flex flex-wrap" style="margin-top:4rem;">
+            @foreach (var project in Model)
+            {
+                var carouselId = $"carousel_{project.ProjectId}";
+                var projectPhotos = project.Photos.Select(p => p.PhotoPath).ToList();
+                var jsonProjectPhotos = Newtonsoft.Json.JsonConvert.SerializeObject(projectPhotos);
+                var projectDescription = project.Description;
+                <div id="@carouselId" class="carousel slide carousel-fade mb-4 me-4" data-bs-ride="carousel" style="width: 300px; height: 300px; overflow: hidden;">
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        @{
+                            var photoIndex = 0;
+                        }
+                        @foreach (var photo in project.Photos)
+                        {
+                            <button type="button" data-bs-target="#@carouselId" data-bs-slide-to="@photoIndex" @(photoIndex == 0 ? "class=active" : "") aria-current="true" aria-label="Slide @photoIndex"></button>
+                            photoIndex++;
+                        }
+                    </div>
 
-                <!-- Inner -->
-                <div class="carousel-inner" style="width: 100%; height: 100%;">
-                    @{
-                        var isActive = "active";
-                    }
-                    @foreach (var photo in project.Photos)
-                    {
-                        <div class="carousel-item @isActive" style="width: 100%; height: 100%;">
-                            <img src="@photo.PhotoPath" class="d-block w-100 h-100 object-fit-cover modal-img" alt="Project Image" data-description="@photo.Description" onclick="showEnlargedImage('@photo.PhotoPath', @Html.Raw(jsonProjectPhotos.Replace("\"", "&quot;")), '@projectDescription')" />
-                            <div class="carousel-caption d-none d-md-block">
-                                <p><b>@project.Description</b></p>
+                    <!-- Inner -->
+                    <div class="carousel-inner" style="width: 100%; height: 100%;">
+                        @{
+                            var isActive = "active";
+                        }
+                        @foreach (var photo in project.Photos)
+                        {
+                            <div class="carousel-item @isActive" style="width: 100%; height: 100%;">
+                                <img src="@photo.PhotoPath" class="d-block w-100 h-100 object-fit-cover modal-img" alt="Project Image" data-description="@photo.Description" onclick="showEnlargedImage('@photo.PhotoPath', @Html.Raw(jsonProjectPhotos.Replace("\"", "&quot;")), '@projectDescription')" />
+                                <div class="carousel-caption d-none d-md-block">
+                                    <p><b>@project.Description</b></p>
                                     <p>@photo.Description</p>
+                                </div>
                             </div>
-                        </div>
-                        isActive = "";
-                    }
-                </div>
+                            isActive = "";
+                        }
+                    </div>
 
-                <!-- Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <a href="@Url.Action("Edit", "Home", new { id = project.ProjectId })" class="edit-btn"><i class="fa fa-pencil"></i></a>
-                <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        }
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <a href="@Url.Action("Edit", "Home", new { id = project.ProjectId })" class="edit-btn"><i class="fa fa-pencil"></i></a>
+                    <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            @Html.PagedListPager(Model, page => Url.Action("Category", new { categoryId = ViewBag.CategoryId, page = page }))
+        </div>
     </div>
 </div>
 
@@ -144,7 +154,7 @@
             var description = document.querySelector('.photo-description');
             var projectDescription = document.querySelector('.project-description');
             enlargedImage.src = newImageSrc;
-            description.innerHTML = document.querySelector(`img[src='${newImageSrc}']`).getAttribute('data-description') || 'Brak opisu';
+            description.innerHTML = document.querySelector(`img[src='${newImageSrc}']`).getAttribute('data-description') || '';
             if (projectDescription) {
                 projectDescription.innerHTML = currentProjectDescription;
             }

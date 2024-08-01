@@ -40,7 +40,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h2>Edytuj</h2>
+    <div style="margin-left:3rem; width:60%; font-size:16px;">
+        <h2 style="font-family: 'Josefin Sans', sans-serif;">Edytuj</h2>
     <form asp-action="Edit" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="ProjectId" />
         <div class="text-danger">
@@ -86,9 +87,10 @@
             <input type="text" id="desc" asp-for="Description" class="form-control"><br>
         </div>
         <input type="hidden" id="photos-to-remove" name="PhotosToRemove" />
-        <input type="submit" value="Zapisz" class="btn btn-primary" />
+            <input type="submit" value="Zapisz" class="btn btn-primary" style="background-color:rgb(88, 57, 39)" />
         <button type="button" id="deleteProjectBtn" class="btn btn-danger">Usuń</button>
     </form>
+    </div>
 
     @section Scripts {
         <script>

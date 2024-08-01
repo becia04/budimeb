@@ -2,6 +2,7 @@
 using budimeb.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace budimeb.Controllers
 {
@@ -108,21 +110,15 @@ namespace budimeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> Category(int categoryId)
+        public async Task<IActionResult> Category(int categoryId, int? page)
         {
-            var category = await db.Categories.FindAsync(categoryId);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            var projects = db.Projects
-                .Where(p => p.CategoryId == categoryId)
-                .Include(p => p.Photos)
-                .ToList();
-
-            ViewBag.CategoryName = category.Name;
-            return View(projects);
+            ViewBag.CategoryName = await db.Categories.Where(c => c.Id == categoryId).Select(c => c.Name).FirstOrDefaultAsync();
+            ViewBag.CategoryId = categoryId;
+            var projects = db.Projects.Where(p => p.CategoryId == categoryId).Include(p => p.Photos).OrderByDescending(p => p.CreatedDate);
+            int pageSize = 30;
+            int pageNumber = (page ?? 1);
+            var pagedProjects = await projects.ToPagedListAsync(pageNumber, pageSize);
+            return View(pagedProjects);
         }
 
         public async Task<IActionResult> Edit(int id)
