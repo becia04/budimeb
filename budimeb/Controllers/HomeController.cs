@@ -372,6 +372,7 @@ namespace budimeb.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Name=category.Name;
             return View(category);
         }
 

@@ -26,6 +26,7 @@
 <body>
     <div style="margin-left:3rem; width:60%; font-size:16px;">
         <h2 style="font-family: 'Josefin Sans', sans-serif;">Dodaj nowe zdjęcia</h2>
+        <div class="underline"></div>
         <form asp-action="Add" method="post" enctype="multipart/form-data">
             <div class="text-danger">
                 @if (ViewData["Error"] != null)
