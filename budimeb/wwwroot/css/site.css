@@ -1,4 +1,20 @@
 ﻿
+.category-icon {
+    display: none;
+}
+
+/* Pokaż ikony i ukryj tekst na mniejszych ekranach */
+@media (max-width: 768px) {
+    .category-text {
+        display: none;
+    }
+
+    .category-icon {
+        display: flex;
+        align-items: center;
+    }
+}
+
 .article-container {
     font-family: 'Josefin Sans', sans-serif;
     margin-top: 3rem;
@@ -152,6 +168,11 @@ body {
     background: linear-gradient(to bottom, rgba(88, 57, 39,0.95) 75%, rgba(88, 57, 39,0) 100%); /* #583927 */
     color: white;
 }
+    .navbar .home_btn {
+        display: none;
+        display: flex;
+        align-items: center;
+    }
 
     /* Usunięcie marginesów i paddingów */
     .navbar, .special-navbar, .navbar div, .special-navbar div {

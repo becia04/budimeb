@@ -1,0 +1,10 @@
+﻿
+<div style="width: 40%;">
+    <h5><b>Nasza oferta:</b></h5>
+    <ul>
+        @foreach (var category in ViewBag.Categories)
+        {
+            <li><a style="text-decoration:none" href="@Url.Action("Category", "Home", new { categoryId = category.Id })">@category.Name</a></li>
+        }
+    </ul>
+</div>

@@ -10,22 +10,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace budimeb.ViewComponents
 {
-    public class MenuViewComponent : ViewComponent
+    public class CategoryViewComponent : ViewComponent
     {
         PhotoContext db;
 
-        public MenuViewComponent(PhotoContext db)
+        public CategoryViewComponent(PhotoContext db)
         {
             this.db = db;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            
-            var categories = await db.Categories.Distinct().OrderBy(c => c.Name).ToListAsync();
-
-            ViewData["Categories"] = categories;
-            return View("_Menu");
+            ViewBag.Categories = await db.Categories.OrderBy(a => a.Name).ToListAsync();
+            return View("_Category");
         }
 
     }

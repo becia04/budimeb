@@ -2,6 +2,7 @@
 using budimeb.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -113,6 +114,7 @@ namespace budimeb.Controllers
         public async Task<IActionResult> Category(int categoryId, int? page)
         {
             ViewBag.CategoryName = await db.Categories.Where(c => c.Id == categoryId).Select(c => c.Name).FirstOrDefaultAsync();
+            ViewBag.Icon = db.Categories.Where(c => c.Id == categoryId).Select(c => c.IconClass).FirstOrDefault();
             ViewBag.CategoryId = categoryId;
             var projects = db.Projects.Where(p => p.CategoryId == categoryId).Include(p => p.Photos).OrderByDescending(p => p.CreatedDate);
             int pageSize = 30;
