@@ -32,7 +32,7 @@
 
 
     <div style="margin-top:4rem; margin-bottom:20px;font-family: 'Josefin Sans', sans-serif;">
-        <div class="underline" style="height: 4px; margin-bottom:2rem; width: calc(100% - 4rem); margin-left: 4rem;"></div>
+        <div class="underline" style="height: 4.5px; margin-bottom:2rem; width: calc(100% - 4rem); margin-left: 4rem;"></div>
         <div style="display: flex; justify-content: space-between; margin-left:4rem; margin-right:4rem;">
             <div style="width: 40%;">
                 <h5><b>BUDIMEB</b></h5>
@@ -68,3 +68,28 @@
 
 </body>
 </html>
+
+<script>
+    // Funkcja wywoływana po kliknięciu na obrazek
+    function showEnlargedImage(imageSrc) {
+        // Tworzenie kontenera obrazka powiększonego
+        var enlargedImageContainer = document.createElement("div");
+        enlargedImageContainer.classList.add("enlarged-image-container");
+
+        // Tworzenie obrazka
+        var enlargedImage = document.createElement("img");
+        enlargedImage.src = imageSrc;
+        enlargedImage.classList.add("enlarged-image");
+
+        // Dodanie obrazka do kontenera
+        enlargedImageContainer.appendChild(enlargedImage);
+
+        // Dodanie kontenera do body strony
+        document.body.appendChild(enlargedImageContainer);
+
+        // Obsługa kliknięcia poza obrazkiem, aby go ukryć
+        enlargedImageContainer.onclick = function () {
+            document.body.removeChild(enlargedImageContainer);
+        };
+    }
+</script>

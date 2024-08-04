@@ -1,46 +1,92 @@
 ﻿@{
     ViewData["Title"] = "O nas";
 }
+<style>
+    .img-article{
+        --w: 350px;
+        margin-right:2rem;
+    }
+    .article-text{
+        font-size:1.5rem;
+    }
+</style>
 
-<h1>O nas</h1>
-<p>Jesteśmy szczecińskim producentem mebli z @ViewBag.YearsOfExperience-letnim doświadczeniem w tworzeniu wysokiej jakości mebli na wymiar. Nasze produkty i usługi cieszą się uznaniem nie tylko na polskim rynku, ale także na rynkach niemieckim i holenderskim. Dzięki długoletniej tradycji oraz pasji do meblarstwa, nasza firma zyskała renomę solidnego i innowacyjnego partnera w aranżacji wnętrz.</p>
+<div class="article-container">
+    <h2 class="article-header">O nas</h2>
+    <div class="underline"></div>
+    <div class="article-content poznaj-nas-lepiej-content">
+        <img class="img-article" src="~/about/about-1.jpg" onclick="showEnlargedImage('/about/about-1.jpg')" />
+        <div class="article-text">
+            <p>Jesteśmy szczecińskim producentem mebli z @ViewBag.YearsOfExperience-letnim doświadczeniem w tworzeniu wysokiej jakości mebli na wymiar. Nasze produkty i usługi cieszą się uznaniem nie tylko na polskim rynku, ale także na rynkach niemieckich oraz holenderskich. Dzięki długoletniej tradycji oraz pasji do meblarstwa, nasza firma zyskała renomę solidnego i innowacyjnego partnera w aranżacji wnętrz.</p>
+        </div>
+    </div>
+</div>
 
-<h2>Co oferujemy</h2>
-<p>Oferujemy szeroki zakres usług, w tym fachowe doradztwo oraz projektowanie mebli dopasowanych do indywidualnych potrzeb naszych klientów. Dzięki naszej głębokiej wiedzy branżowej oraz śledzeniu najnowszych trendów wnętrzarskich, zapewniamy kompleksowe wsparcie w umeblowaniu Państwa mieszkania, domu czy biura. Nasze projekty cechują się funkcjonalnością, estetyką oraz dbałością o każdy detal.</p>
+<div class="article-container" >
+    <h3 class="article-header" style="font-size: 2rem;">Co oferujemy</h3>
+    <div class="underline" style="height:1.5px;"></div>
+    <div class="article-content poznaj-nas-lepiej-content">
+        <div class="article-text" style="flex: 1;">
+            <p>Oferujemy szeroki zakres usług, w tym fachowe doradztwo oraz projektowanie mebli dopasowanych do indywidualnych potrzeb naszych klientów. Dzięki naszej głębokiej wiedzy branżowej oraz śledzeniu najnowszych trendów wnętrzarskich, zapewniamy kompleksowe wsparcie w umeblowaniu Państwa mieszkania, domu czy biura. Nasze projekty cechują się funkcjonalnością, estetyką oraz dbałością o każdy detal.</p>
+        </div>
+        <img class="img-article" src="~/about/about-2.jpg" onclick="showEnlargedImage('/about/about-2.jpg')" />
+    </div>
+</div>
 
-<h2>Usługi</h2>
-<p>Nasze usługi obejmują pełny proces, od pierwszego kontaktu aż po finalną realizację projektu:</p>
 
-<h3>Pomiar</h3>
-<p>Precyzyjne ustalenie wymiarów i specyfikacji jest kluczowe dla idealnego dopasowania mebli do przestrzeni. Nasi specjaliści dokonują dokładnych pomiarów, aby zagwarantować, że każdy element będzie perfekcyjnie pasował.</p>
+<div class="article-container">
+    <h3 class="article-header" style="font-size: 2rem;">Nasze usługi obejmują pełny proces, od pierwszego kontaktu aż po finalną realizację projektu:</h3>
+    <div class="underline" style="height:1.5px;"></div>
+    <div class="article-content poznaj-nas-lepiej-content">
+        <img class="img-article" src="~/about/about-3.jpg" style="--w: 450px;" onclick="showEnlargedImage('/about/about-3.jpg')" />
+        <div class="article-text" style="font-size:1.3rem;">
+                    <b>Pomiar</b>
+                    <p>Precyzyjne ustalenie wymiarów i specyfikacji jest kluczowe dla idealnego dopasowania mebli do przestrzeni. Nasi specjaliści dokonują dokładnych pomiarów, aby zagwarantować, że każdy element będzie perfekcyjnie pasował.</p>
+                    <b>Projektowanie i wycena</b>
+                    <p>Tworzymy indywidualne projekty mebli, które są idealnie dopasowane do potrzeb i budżetu klienta. Łączymy kreatywność z funkcjonalnością, aby dostarczyć rozwiązania, które będą nie tylko piękne, ale i praktyczne. Przed rozpoczęciem produkcji, przedstawiamy szczegółową wycenę, aby zapewnić pełną transparentność kosztów.</p>
 
-<h3>Projektowanie i wycena</h3>
-<p>Tworzymy indywidualne projekty mebli, które są idealnie dopasowane do potrzeb i budżetu klienta. Nasz zespół projektantów łączy kreatywność z funkcjonalnością, aby dostarczyć rozwiązania, które będą nie tylko piękne, ale i praktyczne. Przed rozpoczęciem produkcji, przedstawiamy szczegółową wycenę, aby zapewnić pełną transparentność kosztów.</p>
+                    <b>Zamówienie</b>
+                    <p>Realizacja zamówienia odbywa się z dbałością o najwyższą jakość. Korzystamy z najlepszych materiałów oraz nowoczesnych technologii, aby zapewnić trwałość i estetykę naszych mebli.</p>
 
-<h3>Zamówienie</h3>
-<p>Realizacja zamówienia odbywa się z dbałością o najwyższą jakość. Korzystamy z najlepszych materiałów oraz nowoczesnych technologii, aby zapewnić trwałość i estetykę naszych mebli.</p>
+                    <b>Realizacja</b>
+                    <p>Profesjonalna instalacja i montaż mebli na miejscu to kluczowy element naszych usług. Nasz zespół montażystów dba o każdy szczegół, aby końcowy efekt spełniał najwyższe standardy jakości.</p>
+            </div>
+    </div>
+</div>
 
-<h3>Realizacja</h3>
-<p>Profesjonalna instalacja i montaż mebli na miejscu to kluczowy element naszych usług. Nasz zespół montażystów dba o każdy szczegół, aby końcowy efekt spełniał najwyższe standardy jakości.</p>
+<div class="article-container">
+    <h3 class="article-header" style="font-size: 2rem;">Nasza oferta</h3>
+    <div class="underline" style="height:1.5px;"></div>
+    <div class="article-content poznaj-nas-lepiej-content">
+        <div class="article-text" style="flex: 1;font-size:1.3rem;">
+            <b>Meble kuchenne na wymiar</b>
+            <p>Oferujemy zarówno klasyczne, jak i nowoczesne rozwiązania kuchenne. Nasze meble kuchenne charakteryzują się funkcjonalnością, estetyką i trwałością. Projektujemy kuchnie, które są ergonomiczne i dostosowane do indywidualnych potrzeb użytkowników.</p>
 
-<h2>Nasza oferta</h2>
+            <b>Szafy na wymiar</b>
+            <p>Tworzymy szafy z drzwiami przesuwnymi, wnękowe, wolnostojące oraz garderoby. Nasze szafy są zaprojektowane z myślą o maksymalnym wykorzystaniu przestrzeni, oferując praktyczne rozwiązania do przechowywania.</p>
 
-<h3>Meble kuchenne na wymiar</h3>
-<p>Oferujemy zarówno klasyczne, jak i nowoczesne rozwiązania kuchenne. Nasze meble kuchenne charakteryzują się funkcjonalnością, estetyką i trwałością. Projektujemy kuchnie, które są ergonomiczne i dostosowane do indywidualnych potrzeb użytkowników.</p>
+            <b>Meble pokojowe</b>
+            <p>Projektujemy i produkujemy różnorodne meble pokojowe, takie jak biurka, komody, stoliki RTV, regały, witryny i łóżka. Nasze meble łączą funkcjonalność z estetyką, tworząc harmonijne i komfortowe wnętrza.</p>
 
-<h3>Szafy na wymiar</h3>
-<p>Tworzymy szafy z drzwiami przesuwnymi, wnękowe, wolnostojące oraz garderoby. Nasze szafy są zaprojektowane z myślą o maksymalnym wykorzystaniu przestrzeni, oferując praktyczne rozwiązania do przechowywania.</p>
+            <b>Meble biurowe i sklepowe</b>
+            <p>Oferujemy szeroki wybór mebli biurowych i sklepowych, w tym biurka, regały, szafki i inne rozwiązania dostosowane do potrzeb firm i sklepów. Nasze meble biurowe charakteryzują się ergonomicznym designem, który wspiera komfort i produktywność w miejscu pracy.</p>
 
-<h3>Meble pokojowe</h3>
-<p>Projektujemy i produkujemy różnorodne meble pokojowe, takie jak biurka, komody, stoliki RTV, regały, witryny i łóżka. Nasze meble łączą funkcjonalność z estetyką, tworząc harmonijne i komfortowe wnętrza.</p>
+            <b>Meble nietypowe</b>
+            <p>Realizujemy indywidualne projekty według wymagań klienta. Nasza elastyczność i kreatywność pozwalają nam tworzyć unikalne meble, które spełniają specyficzne potrzeby i preferencje naszych klientów.</p>
+        </div>
+        <img class="img-article" src="~/about/about-4.jpg" style="--w: 450px;" onclick="showEnlargedImage('/about/about-4.jpg')" />
+    </div>
+</div>
 
-<h3>Meble biurowe i sklepowe</h3>
-<p>Oferujemy szeroki wybór mebli biurowych i sklepowych, w tym biurka, regały, szafki i inne rozwiązania dostosowane do potrzeb firm i sklepów. Nasze meble biurowe charakteryzują się ergonomicznym designem, który wspiera komfort i produktywność w miejscu pracy.</p>
+<div class="article-container">
+    <h3 class="article-header" style="font-size: 2rem;">Nasze podejście</h3>
+    <div class="underline" style="height:1.5px;"></div>
+    <div class="article-content poznaj-nas-lepiej-content">
+        <img class="img-article" src="~/about/about-5.jpg" onclick="showEnlargedImage('/about/about-5.jpg')" />
+        <div class="article-text">
+            <p>Oferujemy szeroki wybór kolorów i wykończeń, które praktycznie nie mają ograniczeń, co pozwala nam zaspokoić wszelkie oczekiwania naszych klientów. Niezależnie od stylu czy kolorystyki, nasze meble są zawsze tworzone z najwyższą starannością i dbałością o detale.</p>
+            <p><b>Zapraszamy do współpracy i odkrycia, jak możemy pomóc w tworzeniu przestrzeni, które będą piękne, funkcjonalne i dostosowane do Państwa potrzeb.</b></p>
 
-<h3>Meble nietypowe</h3>
-<p>Realizujemy indywidualne projekty według wymagań klienta. Nasza elastyczność i kreatywność pozwalają nam tworzyć unikalne meble, które spełniają specyficzne potrzeby i preferencje naszych klientów.</p>
-
-<h2>Nasze podejście</h2>
-<p>Oferujemy szeroki wybór kolorów i wykończeń, które praktycznie nie mają ograniczeń, co pozwala nam zaspokoić wszelkie oczekiwania naszych klientów. Niezależnie od stylu czy kolorystyki, nasze meble są zawsze tworzone z najwyższą starannością i dbałością o detale.</p>
-
-<p>Zapraszamy do współpracy i odkrycia, jak możemy pomóc w tworzeniu przestrzeni, które będą piękne, funkcjonalne i dostosowane do Państwa potrzeb.</p>
+        </div>
+    </div>
+</div>
