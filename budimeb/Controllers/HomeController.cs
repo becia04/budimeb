@@ -352,6 +352,11 @@ namespace budimeb.Controllers
             return View();
         }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewBag.YearsOfExperience = DateTime.Now.Year - 2003;

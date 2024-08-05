@@ -1,4 +1,53 @@
-﻿.enlarged-image-container-solo {
+﻿#cookieConsent {
+    background-color: rgba(20, 20, 20, 0.8);
+    min-height: 26px;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 26px;
+    padding: 8px 0 8px 0;
+    z-index: 9999;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    display: none;
+}
+
+    #cookieConsent a {
+        color: white; /* Zmieniono kolor na rgb(88, 57, 39) */
+        text-decoration: none;
+    }
+
+.cookieConsentContainer {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.cookieTitle a {
+    font-weight: bold;
+    color: #fff;
+    font-size: 22px;
+}
+
+.cookieDesc a {
+    color: #ccc;
+}
+
+.cookieButton a {
+    color: #fff;
+    padding: 0 15px;
+    background: rgb(108, 77, 59); /* Zmieniono kolor na rgb(88, 57, 39) */
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+
+
+.enlarged-image-container-solo {
     position: fixed;
     top: 0;
     left: 0;
