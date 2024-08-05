@@ -22,7 +22,7 @@
         {
             <a class="btn" style="font-size:25px; color:white; " href="@Url.Action("Category", "Home", new { categoryId = category.Id })">
                 <span class="category-text">@category.Name</span>
-                <img src="@category.IconClass" class="category-icon" style="width:40px; height:40px; filter: invert(1);" alt="@category.Name" />
+                <img src="@category.IconClass" class="category-icon" style="width:30px; height:40px; filter: invert(1);" alt="@category.Name" />
             </a>
         }
     </div>
@@ -31,12 +31,12 @@
         {
                 <a style="margin-right:2rem;" class="nav-link" href="/Account/Logout">Wyloguj</a>
         }
-        <a class="nav-link" style="margin-right:1rem;" href="https://www.facebook.com/Budimeb" target="_blank">
-            <i class="fab fa-facebook"></i> <!-- Ikona Facebooka -->
-        </a>
-        <a class="nav-link" style="margin-right:1rem; margin-left:1rem;" asp-area="" asp-controller="Home" asp-action="Contact">
-            <i class="fas fa-phone"></i>
-        </a>
+            <a class="nav-link fb-and-contact" style="margin-right:1rem;" href="https://www.facebook.com/Budimeb" target="_blank">
+                <i class="fab fa-facebook"></i> <!-- Ikona Facebooka -->
+            </a>
+            <a class="nav-link fb-and-contact" style="margin-right:1rem; margin-left:1rem;" asp-area="" asp-controller="Home" asp-action="Contact">
+                <i class="fas fa-phone"></i>
+            </a>
         <div class="dropdown">
             <button class="dropdown-button">PL</button>
             <div class="dropdown-content">
