@@ -62,10 +62,15 @@ namespace budimeb
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                    name: "sitemap",
+                    pattern: "sitemap.xml",
+                    defaults: new { controller = "Sitemap", action = "Index" });
             });
         }
 

@@ -1,6 +1,13 @@
 ﻿<html>
 
 <head>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-XXXXX-Y');
+    </script>
     <title>
         @{
             var title = "BUDIMEB";
@@ -12,6 +19,9 @@
         }
     </title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="description" content="Jesteśmy szczecińską firmą specjalizującą się w produkcji mebli na wymiar. Nasza oferta obejmuje szeroki wybór mebli, które można dostosować do indywidualnych potrzeb i preferencji każdego klienta. Dzięki naszemu doświadczeniu i zaangażowaniu, gwarantujemy najwyższą jakość i satysfakcję z zakupionych produktów.">
+    <meta name="keywords" content="meble na wymiar, meble na wymiar szczecin, kuchnia, łazienka, pokój, biuro, szafy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="~/js/site.js"></script>
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -20,7 +30,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <title>@ViewData["Title"]</title>
 </head>
 
 <body style="background-color:#ebe9e4;">
