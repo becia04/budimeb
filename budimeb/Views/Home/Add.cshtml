@@ -2,75 +2,75 @@
     ViewBag.Title = "Dodaj";
 }
 
-<head>
-    <style>
-        .img-container {
-            display: inline-block;
-            text-align: center;
-            margin: 10px;
-        }
-        .preview-img {
-            max-width: 150px;
-            max-height: 150px;
-            display: block;
-            margin: 0 auto;
-        }
-        .description-input {
-            width: 100%;
-            box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
-            margin-top: 5px;
-        }
-        </style>
-    <!-- Dodanie jQuery za pomocą CDN -->
-</head>
-<body>
-    <div style="margin-left:3rem; width:60%; font-size:16px;">
-        <h2 style="font-family: 'Josefin Sans', sans-serif;">Dodaj nowe zdjęcia</h2>
-        <div class="underline"></div>
-        <form asp-action="Add" method="post" enctype="multipart/form-data">
-            <div class="text-danger">
-                @if (ViewData["Error"] != null)
-                {
-                    <p>@ViewData["Error"]</p>
-                }
-            </div>
-            <div class="form-group">
-                <label for="photos">Zdjęcia</label>
-                <input type="file" id="photos" name="photos" multiple class="form-control" accept=".jpg,.jpeg" />
-                @if (ViewData["PhotosError"] != null)
-                {
-                    <p class="text-danger">@ViewData["PhotosError"]</p>
-                }
-            </div>
-            <div id="photos-preview" class="form-group">
-            </div>
-            <div class="form-group">
-                <label for="category">Kategoria:</label><br>
-                <select id="category" name="categoryId" class="form-control">
-                    @foreach (var category in ViewBag.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select><br>
-                @if (ViewData["CategoryError"] != null)
-                {
-                    <p class="text-danger">@ViewData["CategoryError"]</p>
-                }
-            </div>
-            <div class="form-group">
-                <label for="name">Nazwa:</label><br>
-                <input type="text" id="name" name="name" class="form-control"><br>
-            </div>
-            <div class="form-group">
-                <label for="desc">Opis:</label><br>
-                <input type="text" id="desc" name="desc" class="form-control"><br>
-            </div>
-            <input type="submit" value="Dodaj" class="btn btn-primary" style="background-color:rgb(88, 57, 39)" />
-        </form>
+@if (User.Identity.IsAuthenticated)
+{
+    <head>
+        <style>
+            .img-container {
+                display: inline-block;
+                text-align: center;
+                margin: 10px;
+            }
 
-    </div>
-    
-    @section Scripts {
+            .preview-img {
+                max-width: 150px;
+                max-height: 150px;
+                display: block;
+                margin: 0 auto;
+            }
+
+            .description-input {
+                width: 100%;
+                box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+                margin-top: 5px;
+            }
+        </style>
+        <!-- Dodanie jQuery za pomocą CDN -->
+    </head>
+    <body>
+        <div style="margin-left:3rem; width:60%; font-size:16px;">
+            <h2 style="font-family: 'Josefin Sans', sans-serif;">Dodaj nowe zdjęcia</h2>
+            <div class="underline"></div>
+            <form asp-action="Add" method="post" enctype="multipart/form-data">
+                <div class="text-danger">
+                    @if (ViewData["Error"] != null)
+                    {
+                        <p>@ViewData["Error"]</p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="photos">Zdjęcia</label>
+                    <input type="file" id="photos" name="photos" multiple class="form-control" accept=".jpg,.jpeg" />
+                    @if (ViewData["PhotosError"] != null)
+                    {
+                        <p class="text-danger">@ViewData["PhotosError"]</p>
+                    }
+                </div>
+                <div id="photos-preview" class="form-group">
+                </div>
+                <div class="form-group">
+                    <label for="category">Kategoria:</label><br>
+                    <select id="category" name="categoryId" class="form-control">
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select><br>
+                    @if (ViewData["CategoryError"] != null)
+                    {
+                        <p class="text-danger">@ViewData["CategoryError"]</p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="desc">Opis:</label><br>
+                    <input type="text" id="desc" name="desc" class="form-control"><br>
+                </div>
+                <input type="submit" value="Dodaj" class="btn btn-primary" style="background-color:rgb(88, 57, 39)" />
+            </form>
+
+        </div>
+
+        @section Scripts {
         <script>
             $(document).ready(function () {
                 $('#photos').on('change', function () {
@@ -111,5 +111,13 @@
                 });
             });
         </script>
-    }
-</body>
+        }
+    </body>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" href="/Account/Login">Login</a>
+    </li>
+}
+

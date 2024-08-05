@@ -1,5 +1,7 @@
 ﻿using budimeb.DAL;
 using budimeb.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -64,7 +66,6 @@ namespace budimeb.Controllers
 
             var project = new Project
             {
-                Name = name,
                 Description = desc,
                 CategoryId = categoryId,
                 CreatedDate = DateTime.Now
@@ -187,7 +188,6 @@ namespace budimeb.Controllers
             }
 
             // Update the project details
-            originalProject.Name = project.Name;
             originalProject.Description = project.Description;
             originalProject.CategoryId = project.CategoryId;
 
@@ -393,9 +393,10 @@ namespace budimeb.Controllers
 
             if (ModelState.IsValid)
             {
+                // Jeśli photo ma być usunięte
                 if (deletePhoto && !string.IsNullOrEmpty(existingCategory.PhotoPath))
                 {
-                    // Delete existing photo from server
+                    // Usuń istniejące zdjęcie z serwera
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.PhotoPath.TrimStart('/'));
                     if (System.IO.File.Exists(filePath))
                     {
@@ -404,9 +405,10 @@ namespace budimeb.Controllers
                     existingCategory.PhotoPath = null;
                 }
 
+                // Sprawdź, czy dodano nowe zdjęcie
                 if (photo != null && (Path.GetExtension(photo.FileName).ToLower() == ".jpg" || Path.GetExtension(photo.FileName).ToLower() == ".jpeg"))
                 {
-                    // Delete existing photo from server if necessary
+                    // Usuń istniejące zdjęcie, jeśli nie jest oznaczone do usunięcia
                     if (!deletePhoto && !string.IsNullOrEmpty(existingCategory.PhotoPath))
                     {
                         var existingFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCategory.PhotoPath.TrimStart('/'));
@@ -416,7 +418,7 @@ namespace budimeb.Controllers
                         }
                     }
 
-                    // Normalize category name
+                    // Normalizuj nazwę pliku
                     var normalizedCategoryName = NormalizeFileName(category.Name);
 
                     var fileName = $"{normalizedCategoryName}{Path.GetExtension(photo.FileName)}";
@@ -427,21 +429,27 @@ namespace budimeb.Controllers
                         await photo.CopyToAsync(stream);
                     }
 
-                    category.PhotoPath = "/uploads/" + fileName;
+                    existingCategory.PhotoPath = "/uploads/" + fileName;
                 }
                 else if (!deletePhoto && !string.IsNullOrEmpty(existingCategory.PhotoPath))
                 {
-                    // If no new photo is uploaded and deletePhoto is false, keep existing photo
-                    category.PhotoPath = existingCategory.PhotoPath;
+                    // Jeśli nowe zdjęcie nie zostało dodane i deletePhoto jest false, zachowaj istniejące zdjęcie
+                    existingCategory.PhotoPath = existingCategory.PhotoPath;
                 }
 
-                db.Entry(existingCategory).CurrentValues.SetValues(category);
+                // Zachowaj IconClass
+                existingCategory.Name = category.Name;
+                existingCategory.Description = category.Description; // Przykładowo, dostosuj inne właściwości
+                                                                     // Skopiuj inne właściwości z modelu, jeśli są potrzebne
+
+                db.Entry(existingCategory).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
             return View(category);
         }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

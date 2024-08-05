@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Edytuj";
 }
-
+@if (User.Identity.IsAuthenticated)
+{
 <head>
     <title>Edytuj</title>
     <style>
@@ -80,10 +81,6 @@
             }
         </div>
         <div class="form-group">
-            <label for="name">Nazwa:</label><br>
-            <input type="text" id="name" asp-for="Name" class="form-control"><br>
-        </div>
-        <div class="form-group">
             <label for="desc">Opis:</label><br>
             <input type="text" id="desc" asp-for="Description" class="form-control"><br>
         </div>
@@ -146,3 +143,10 @@
         </script>
     }
 </body>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" href="/Account/Login">Login</a>
+    </li>
+}

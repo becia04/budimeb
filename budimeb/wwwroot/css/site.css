@@ -1,4 +1,4 @@
-﻿.enlarged-image-container {
+﻿.enlarged-image-container-solo {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@
     align-items: center;
 }
 
-.enlarged-image {
+.enlarged-image-solo {
     max-width: 90%;
     max-height: 90%;
     border-radius: 8px;
@@ -190,62 +190,6 @@ body {
     position: relative;
 }
 
-/* Wspólne style dla obu navbarów */
-.navbar, .special-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 75px;
-    width: 100%;
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 20px;
-}
-
-    .navbar div, .special-navbar div {
-        display: flex;
-        align-items: center;
-    }
-
-        .navbar div:first-child, .special-navbar div:first-child {
-            justify-content: flex-start;
-        }
-
-        .navbar div:nth-child(2), .special-navbar div:nth-child(2) {
-            flex-grow: 1;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .navbar div:last-child, .special-navbar div:last-child {
-            justify-content: flex-end;
-        }
-
-/* Specyficzne style dla special-navbar */
-.special-navbar {
-    background: linear-gradient(to bottom, rgba(88, 57, 39, 0.6) 75%, rgba(88, 57, 39,0) 100%); /* #583927 */
-    color: white;
-}
-    .special-navbar .home_btn {
-        display: none;
-    }
-
-/* Specyficzne style dla navbar */
-.navbar {
-    background: linear-gradient(to bottom, rgba(88, 57, 39,0.95) 75%, rgba(88, 57, 39,0) 100%); /* #583927 */
-    color: white;
-}
-    .navbar .home_btn {
-        display: none;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Usunięcie marginesów i paddingów */
-    .navbar, .special-navbar, .navbar div, .special-navbar div {
-        margin: 0;
-        padding: 0;
-    }
-
 
 .btn-primary {
   color: white;
@@ -277,10 +221,113 @@ html {
   min-height: 100%;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+.navbar, .special-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+    width: 100%;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 20px;
+}
+
+    .navbar > div, .special-navbar > div {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar div:first-child, .special-navbar div:first-child {
+        justify-content: flex-start;
+    }
+
+    .navbar div:nth-child(2), .special-navbar div:nth-child(2) {
+        flex-grow: 1;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .navbar div:last-child, .special-navbar div:last-child {
+        justify-content: flex-end;
+    }
+
+/* Specyficzne style dla special-navbar */
+.special-navbar {
+    background: linear-gradient(to bottom, rgba(88, 57, 39, 0.6) 75%, rgba(88, 57, 39,0) 100%);
+    color: white;
+}
+
+    .special-navbar .home_btn {
+        display: none;
+    }
+
+/* Specyficzne style dla navbar */
+.navbar {
+    background: linear-gradient(to bottom, rgba(88, 57, 39,0.95) 75%, rgba(88, 57, 39,0) 100%);
+    color: white;
+}
+
+    .navbar .home_btn {
+        display: none;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Usunięcie marginesów i paddingów */
+    .navbar, .special-navbar, .navbar > div, .special-navbar > div {
+        margin: 0;
+        padding: 0;
+    }
+
+/* Style dla dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 20px;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.dropdown-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 70px;
+}
+
+.navbar .dropdown-content {
+    background: linear-gradient(0deg, rgba(88, 57, 39,0.95) 60%, rgba(88, 57, 39,0) 100%);
+    color: white;
+}
+
+.special-navbar .dropdown-content {
+    background: linear-gradient(0deg, rgba(88, 57, 39,0.6) 60%, rgba(88, 57, 39,0) 100%); /* #583927 */
+    color: white;
+}
+
+.dropdown-content a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease;
+}
+    .dropdown-content a:hover {
+        text-decoration: none;
+        background-color: rgba(88, 57, 39, 0.9);
+        transform: scale(1.1);
+        color: white;
+    }
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

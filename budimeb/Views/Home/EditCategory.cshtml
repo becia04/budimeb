@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Edytuj: "  + ViewBag.Name;
 }
+@if (User.Identity.IsAuthenticated)
+{
 <style>
     #photo-preview {
         max-width: 300px;
@@ -48,6 +50,15 @@
     </div>
 </form>
 </div>
+}
+else
+{
+<li class="nav-item">
+    <a class="nav-link" href="/Account/Login">Login</a>
+</li>
+}
+
+
 
 @section Scripts {
     <script>

@@ -7,6 +7,12 @@
     var navbarClass = isHomeIndex ? "special-navbar" : "navbar";
 }
 <nav class="menu @navbarClass" style="height:auto;">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn" style="font-size:25px; color:white; " href="@Url.Action("Add", "Home")">
+            <i class="fa-regular fa-plus"></i>
+        </a>
+    }
     <a class="btn home_btn" style="font-size:40px; font-weight: bold; margin-left:1rem; color:white;" href="@Url.Action("Index", "Home")">
         <span class="category-text">BUDIMEB</span>
         <img src="~/home-icon.png" class="category-icon" style="width:40px; height:40px; filter: invert(1);" alt="Home Page" />
@@ -20,13 +26,23 @@
             </a>
         }
     </div>
-    <div style="margin-left:2rem;">
-        <a class="nav-link" href="https://www.facebook.com/Budimeb" target="_blank">
+    <div style="margin-right:2rem;">
+        @if (User.Identity.IsAuthenticated)
+        {
+                <a style="margin-right:2rem;" class="nav-link" href="/Account/Logout">Wyloguj</a>
+        }
+        <a class="nav-link" style="margin-right:1rem;" href="https://www.facebook.com/Budimeb" target="_blank">
             <i class="fab fa-facebook"></i> <!-- Ikona Facebooka -->
         </a>
         <a class="nav-link" style="margin-right:1rem; margin-left:1rem;" asp-area="" asp-controller="Home" asp-action="Contact">
             <i class="fas fa-phone"></i>
         </a>
-
+        <div class="dropdown">
+            <button class="dropdown-button">PL</button>
+            <div class="dropdown-content">
+                <a href="#">DE</a>
+                <a href="#">ENG</a>
+            </div>
+        </div>
     </div>
 </nav>

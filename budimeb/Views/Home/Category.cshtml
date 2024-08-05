@@ -62,7 +62,10 @@
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <a href="@Url.Action("Edit", "Home", new { id = project.ProjectId })" class="edit-btn"><i class="fas fa-pencil-alt"></i></a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("Edit", "Home", new { id = project.ProjectId })" class="edit-btn"><i class="fas fa-pencil-alt"></i></a>
+                    }
                     <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>

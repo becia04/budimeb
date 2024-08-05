@@ -1,0 +1,22 @@
+﻿@page
+@model LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div style="margin-left:3rem; width:60%; font-size:16px;">
+    <h2 style="font-family: 'Josefin Sans', sans-serif;">Zaloguj się</h2>
+    <div class="underline"></div>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Input.UserName">Login: </label>
+        <input asp-for="Input.UserName" class="form-control" />
+        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Password">Hasło: </label>
+        <input asp-for="Input.Password" type="password" class="form-control" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+        <button type="submit" class="btn btn-primary" style="background-color:rgb(88, 57, 39)">Zaloguj</button>
+</form>
+</div>
