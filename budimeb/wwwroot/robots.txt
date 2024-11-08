@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /Privacy
+Allow: /
 
 Sitemap: https://www.budimeb.somee.com/sitemap.xml

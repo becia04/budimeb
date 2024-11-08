@@ -190,6 +190,7 @@ namespace budimeb.Controllers
             // Update the project details
             originalProject.Description = project.Description;
             originalProject.CategoryId = project.CategoryId;
+            originalProject.CreatedDate = DateTime.Now;
 
             // Check if the category has changed
             var newCategory = await db.Categories.FindAsync(project.CategoryId);
