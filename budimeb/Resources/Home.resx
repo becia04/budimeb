@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Akceptuje!</value>
+  </data>
+  <data name="DAbout" xml:space="preserve">
+    <value>Jesteśmy szczecińskim producentem mebli z 21-letnim doświadczeniem w tworzeniu wysokiej jakości mebli na wymiar. Nasze produkty i usługi cieszą się uznaniem nie tylko na polskim rynku, ale także na rynkach niemieckich oraz holenderskich. Dzięki długoletniej tradycji oraz pasji do meblarstwa, nasza firma zyskała renomę solidnego i innowacyjnego partnera w aranżacji wnętrz.</value>
+  </data>
+  <data name="DApproach" xml:space="preserve">
+    <value>Każdy projekt jest tworzony z myślą o specyficznych potrzebach i gustach naszych klientów.</value>
+  </data>
+  <data name="DBathroom" xml:space="preserve">
+    <value>Miejsce relaksu i odświeżenia. Nasze łazienki łączą w sobie elegancję i praktyczność, dostosowując się do indywidualnych potrzeb każdego klienta.</value>
+  </data>
+  <data name="DCompany" xml:space="preserve">
+    <value>Profesjonalne i stylowe wyposażenie biur oraz sklepów, które podnosi komfort pracy i tworzy atrakcyjne środowisko dla klientów. Nasze projekty są zaprojektowane z myślą o funkcjonalności, produktywności oraz estetycznym wyglądzie.</value>
+  </data>
+  <data name="DKitchen" xml:space="preserve">
+    <value>Przestrzeń, gdzie funkcjonalność spotyka estetykę. Nasze kuchnie są zaprojektowane z myślą o wygodzie i stylu, oferując szeroki wybór klasycznych i nowoczesnych rozwiązań.</value>
+  </data>
+  <data name="DKnow_us1" xml:space="preserve">
+    <value>Jesteśmy szczecińską firmą specjalizującą się w produkcji mebli na wymiar. Nasza oferta obejmuje szeroki wybór mebli, które można dostosować do indywidualnych potrzeb i preferencji każdego klienta. Dzięki naszemu doświadczeniu i zaangażowaniu, gwarantujemy najwyższą jakość i satysfakcję z zakupionych produktów.</value>
+  </data>
+  <data name="DKnow_us2" xml:space="preserve">
+    <value>Nasze meble wyróżniają się nie tylko funkcjonalnością, ale również unikalnym designem. Stale śledzimy najnowsze trendy i wprowadzamy innowacyjne rozwiązania, aby zapewnić naszym klientom produkty zgodne z ich oczekiwaniami.</value>
+  </data>
+  <data name="DKnow_us3" xml:space="preserve">
+    <value>Zapraszamy do zapoznania się z naszą ofertą i skorzystania z naszych usług. Jesteśmy przekonani, że znajdą Państwo u nas idealne meble do swojego domu lub biura.</value>
+  </data>
+  <data name="DOffer" xml:space="preserve">
+    <value>Oferujemy szeroki zakres usług, w tym fachowe doradztwo oraz projektowanie mebli dopasowanych do indywidualnych potrzeb naszych klientów. Dzięki naszej głębokiej wiedzy branżowej oraz śledzeniu najnowszych trendów wnętrzarskich, zapewniamy kompleksowe wsparcie w umeblowaniu Państwa mieszkania, domu czy biura. Nasze projekty cechują się funkcjonalnością, estetyką oraz dbałością o każdy detal.</value>
+  </data>
+  <data name="DOffer_DCompany" xml:space="preserve">
+    <value>Oferujemy szeroki wybór mebli biurowych i sklepowych, w tym biurka, regały, szafki i inne rozwiązania dostosowane do potrzeb firm i sklepów. Nasze meble biurowe charakteryzują się ergonomicznym designem, który wspiera komfort i produktywność w miejscu pracy.</value>
+  </data>
+  <data name="DOffer_DKitchen" xml:space="preserve">
+    <value>Oferujemy zarówno klasyczne, jak i nowoczesne rozwiązania kuchenne. Nasze meble kuchenne charakteryzują się funkcjonalnością, estetyką i trwałością. Projektujemy kuchnie, które są ergonomiczne i dostosowane do indywidualnych potrzeb użytkowników.</value>
+  </data>
+  <data name="DOffer_DRoom" xml:space="preserve">
+    <value>Projektujemy i produkujemy różnorodne meble pokojowe, takie jak biurka, komody, stoliki RTV, regały, witryny i łóżka. Nasze meble łączą funkcjonalność z estetyką, tworząc harmonijne i komfortowe wnętrza.</value>
+  </data>
+  <data name="DOffer_DUnusual" xml:space="preserve">
+    <value>Realizujemy indywidualne projekty według wymagań klienta. Nasza elastyczność i kreatywność pozwalają nam tworzyć unikalne meble, które spełniają specyficzne potrzeby i preferencje naszych klientów.</value>
+  </data>
+  <data name="DOffer_DWardrobe" xml:space="preserve">
+    <value>Tworzymy szafy z drzwiami przesuwnymi, wnękowe, wolnostojące oraz garderoby. Nasze szafy są zaprojektowane z myślą o maksymalnym wykorzystaniu przestrzeni, oferując praktyczne rozwiązania do przechowywania.</value>
+  </data>
+  <data name="DOffer_TCompany" xml:space="preserve">
+    <value>Meble biurowe i sklepowe</value>
+  </data>
+  <data name="DOffer_TKitchen" xml:space="preserve">
+    <value>Meble kuchenne</value>
+  </data>
+  <data name="DOffer_TRoom" xml:space="preserve">
+    <value>Meble pokojowe</value>
+  </data>
+  <data name="DOffer_TUnusual" xml:space="preserve">
+    <value>Meble nietypowe</value>
+  </data>
+  <data name="DOffer_TWardrobe" xml:space="preserve">
+    <value>Szafy</value>
+  </data>
+  <data name="DOur_Approach" xml:space="preserve">
+    <value>Oferujemy szeroki wybór kolorów i wykończeń, które praktycznie nie mają ograniczeń, co pozwala nam zaspokoić wszelkie oczekiwania naszych klientów. Niezależnie od stylu czy kolorystyki, nasze meble są zawsze tworzone z najwyższą starannością i dbałością o detale.</value>
+  </data>
+  <data name="DProces_DDesign" xml:space="preserve">
+    <value>Tworzymy indywidualne projekty mebli, które są idealnie dopasowane do potrzeb i budżetu klienta. Łączymy kreatywność z funkcjonalnością, aby dostarczyć rozwiązania, które będą nie tylko piękne, ale i praktyczne. Przed rozpoczęciem produkcji, przedstawiamy szczegółową wycenę, aby zapewnić pełną transparentność kosztów.</value>
+  </data>
+  <data name="DProces_DImplementation" xml:space="preserve">
+    <value>Profesjonalna instalacja i montaż mebli na miejscu to kluczowy element naszych usług. Nasz zespół montażystów dba o każdy szczegół, aby końcowy efekt spełniał najwyższe standardy jakości.</value>
+  </data>
+  <data name="DProces_DMeasurement" xml:space="preserve">
+    <value>Precyzyjne ustalenie wymiarów i specyfikacji jest kluczowe dla idealnego dopasowania mebli do przestrzeni. Nasi specjaliści dokonują dokładnych pomiarów, aby zagwarantować, że każdy element będzie perfekcyjnie pasował.</value>
+  </data>
+  <data name="DProces_DOrder" xml:space="preserve">
+    <value>Realizacja zamówienia odbywa się z dbałością o najwyższą jakość. Korzystamy z najlepszych materiałów oraz nowoczesnych technologii, aby zapewnić trwałość i estetykę naszych mebli.</value>
+  </data>
+  <data name="DProces_TDesign" xml:space="preserve">
+    <value>Projekt i wycena</value>
+  </data>
+  <data name="DProces_TImplementation" xml:space="preserve">
+    <value>Realizacja</value>
+  </data>
+  <data name="DProces_TMeasurement" xml:space="preserve">
+    <value>Pomiar</value>
+  </data>
+  <data name="DProces_TOrder" xml:space="preserve">
+    <value>Zamówienie</value>
+  </data>
+  <data name="DProfessional" xml:space="preserve">
+    <value>Zapewniamy pełne wsparcie na każdym etapie realizacji zamówienia, od projektu po montaż.</value>
+  </data>
+  <data name="DRoom" xml:space="preserve">
+    <value>Strefa wypoczynku i komfortu. Nasze meble do pokoi i sypialni tworzą przytulne i funkcjonalne wnętrza, od biurek i komód po łóżka i stoliki RTV.</value>
+  </data>
+  <data name="DWardrobe" xml:space="preserve">
+    <value>Przemyślane rozwiązania do przechowywania. Oferujemy szafy na wymiar, z drzwiami przesuwnymi, wnękowe, wolnostojące i garderoby, które maksymalizują przestrzeń i organizację.</value>
+  </data>
+  <data name="Info_cookie" xml:space="preserve">
+    <value>Ten serwis używa cookies i podobnych technologii.Dowiedz się więcej</value>
+  </data>
+  <data name="Invitation" xml:space="preserve">
+    <value>Zapraszamy do współpracy i odkrycia, jak możemy pomóc w tworzeniu przestrzeni, które będą piękne, funkcjonalne i dostosowane do Państwa potrzeb.</value>
+  </data>
+  <data name="Read_more" xml:space="preserve">
+    <value>Czytaj więcej</value>
+  </data>
+  <data name="ShortDesc" xml:space="preserve">
+    <value>Meble na wymiar</value>
+  </data>
+  <data name="TAbout" xml:space="preserve">
+    <value>O nas</value>
+  </data>
+  <data name="TApproach" xml:space="preserve">
+    <value>Indywidualne podejście</value>
+  </data>
+  <data name="TBathroom" xml:space="preserve">
+    <value>Łazienka</value>
+  </data>
+  <data name="TCompany" xml:space="preserve">
+    <value>Dla firm</value>
+  </data>
+  <data name="TContact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="TFind_us" xml:space="preserve">
+    <value>Znajdziesz nas tutaj</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>BUDIMEB</value>
+  </data>
+  <data name="TKitchen" xml:space="preserve">
+    <value>Kuchnia</value>
+  </data>
+  <data name="Tknow_us" xml:space="preserve">
+    <value>Poznaj nas lepiej</value>
+  </data>
+  <data name="TMap" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="TOffer" xml:space="preserve">
+    <value>Co oferujemy</value>
+  </data>
+  <data name="TOpinions" xml:space="preserve">
+    <value>Co myślą o nas inni</value>
+  </data>
+  <data name="TOur_Approach" xml:space="preserve">
+    <value>Nasze podejście</value>
+  </data>
+  <data name="TProces" xml:space="preserve">
+    <value>Nasze usługi obejmują pełny proces, od pierwszego kontaktu aż po finalną realizację projektu:</value>
+  </data>
+  <data name="TProduct" xml:space="preserve">
+    <value>Nasza oferta</value>
+  </data>
+  <data name="TProfessional" xml:space="preserve">
+    <value>Profesjonalne wsparcie</value>
+  </data>
+  <data name="TQuality" xml:space="preserve">
+    <value>Wysoka jakość</value>
+  </data>
+  <data name="TRoom" xml:space="preserve">
+    <value>Pokój</value>
+  </data>
+  <data name="TWardrobe" xml:space="preserve">
+    <value>Szafy</value>
+  </data>
+  <data name="TWhy_us" xml:space="preserve">
+    <value>Dlaczego my?</value>
+  </data>
+</root>

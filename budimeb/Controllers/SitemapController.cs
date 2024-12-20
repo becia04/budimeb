@@ -42,10 +42,6 @@ public class SitemapController : Controller
             writer.WriteElementString("lastmod", System.DateTime.UtcNow.ToString("yyyy-MM-dd"));
             writer.WriteEndElement();
 
-            writer.WriteStartElement("url");
-            writer.WriteElementString("loc", Url.Action("Category", "Home", null, Request.Scheme));
-            writer.WriteElementString("lastmod", System.DateTime.UtcNow.ToString("yyyy-MM-dd"));
-            writer.WriteEndElement();
 
             writer.WriteStartElement("url");
             writer.WriteElementString("loc", Url.Action("Privacy", "Home", null, Request.Scheme));
@@ -53,12 +49,12 @@ public class SitemapController : Controller
             writer.WriteEndElement();
 
         // Dynamiczne adresy URL dla projektów
-        var projects = db.Projects.ToList(); // Pobranie projektów z bazy danych
-            foreach (var project in projects)
+        var categories = db.Categories.ToList(); // Pobranie projektów z bazy danych
+            foreach (var category in categories)
             {
                 writer.WriteStartElement("url");
-                writer.WriteElementString("loc", Url.Action("Category", "Home", new { id = project.CategoryId }, Request.Scheme));
-                writer.WriteElementString("lastmod", project.CreatedDate.ToString("yyyy-MM-dd"));
+                writer.WriteElementString("loc", Url.Action("Category", "Home", new { id = category.Id }, Request.Scheme));
+                writer.WriteElementString("lastmod", System.DateTime.UtcNow.ToString("yyyy-MM-dd"));
                 writer.WriteEndElement();
             }
 

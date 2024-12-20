@@ -10,13 +10,14 @@
 
 </head>
 <body>
+    <h1>@ViewBag.ShortDesc</h1>
     <section class="hero">
         <header id="header">
             @(await Component.InvokeAsync("Menu"))
         </header>
         <div class="hero-header">
             <h1 class="hero-title" style="font-family: 'Josefin Sans', sans-serif">BUDIMEB</h1>
-            <h2 style="font-family: 'Josefin Sans', sans-serif">Meble na wymiar</h2>
+            <h2 style="font-family: 'Josefin Sans', sans-serif">@ViewBag.ShortDesc</h2>
         </div>
         <footer class="hero-footer">
             <a class="button button-primary" href="@Url.Action("Contact", "Home")">Kontakt</a>
@@ -25,7 +26,7 @@
     </section>
 
     <div class="article-container">
-        <h2 class="article-header">Nasze produkty</h2>
+        <h2 class="article-header">Nasza oferta</h2>
         <div class="underline"></div>
 
 

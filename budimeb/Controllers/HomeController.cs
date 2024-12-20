@@ -15,18 +15,29 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
+using Microsoft.Extensions.Localization;
 
 namespace budimeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IStringLocalizer<HomeController> localizer;
         private readonly ILogger<HomeController> _logger;
         private readonly PhotoContext db;
 
-        public HomeController(PhotoContext db, ILogger<HomeController> logger)
+        public HomeController(PhotoContext db, ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer)
         {
             this.db = db;
             _logger = logger;
+            this.localizer = localizer;
+        }
+
+        public IActionResult Index()
+        {
+            var shortdesc = localizer["ShortDesc"];
+            ViewBag.ShortDesc = shortdesc;
+            ViewBag.Categories = db.Categories.OrderBy(a => a.Name).ToList();
+            return View();
         }
 
         public IActionResult Add()
@@ -362,12 +373,6 @@ namespace budimeb.Controllers
         {
             ViewBag.YearsOfExperience = DateTime.Now.Year - 2003;
 
-            return View();
-        }
-
-        public IActionResult Index()
-        {
-            ViewBag.Categories = db.Categories.OrderBy(a => a.Name).ToList();
             return View();
         }
 
